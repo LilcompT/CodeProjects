@@ -1,2 +1,2 @@
-# CodeRandom
-Random algorithms and problems
+# RandomCodeProjects
+This folder contains any projects that are out of regular scope

@@ -1,18 +1,34 @@
 ﻿using System;
 
-namespace InterfaceExampleApplication
+namespace LearnApplicationVol1
 {
-    public class Vehicle
+    public class MainClass
     {
         public static void Main(string[] args)
         {
-            VehicleWork veh = new VehicleWork();
+            VehicleInterfaceWork veh = new VehicleInterfaceWork();
             veh.SetName = "bob";
             veh.EngineType();
-            
         }
     }
 
+    // NULLABLES
+    class Nullables
+    {
+        double? num1 = 1.10;
+        double? num2 = 3.141;
+        double? num3;
+
+        public void NullValuesTest()
+        {
+            num3 = num1 ?? 5.43;
+            Console.WriteLine("From num1 " + num3);
+            num3 = num2 ?? 5.43;
+            Console.WriteLine("From num2 " + num3);
+        }
+    }
+
+    // INTERFACE
     interface ITest
     {
         string SetName
@@ -22,7 +38,7 @@ namespace InterfaceExampleApplication
         void EngineType();
     }
 
-    class VehicleWork : ITest
+    class VehicleInterfaceWork : ITest
     {
         string name = "";
 
@@ -38,4 +54,6 @@ namespace InterfaceExampleApplication
             Console.WriteLine(SetName);
         }
     }
+
+    // ABSTRACT
 }

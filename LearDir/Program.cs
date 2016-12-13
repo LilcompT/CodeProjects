@@ -12,6 +12,29 @@ namespace LearnApplicationVol1
 
             Nullables nullType = new Nullables();
             nullType.NullValuesTest();
+
+            PrintOverload p = new PrintOverload();
+            p.PrintData(5);
+            p.PrintData(5.5);
+            p.PrintData("Five");
+        }
+    }
+    // FUNCTION OVERLOADING
+    class PrintOverload
+    {
+        public void PrintData(int i)
+        {
+            Console.WriteLine("INT is: " + i);
+        }
+
+        public void PrintData(double j)
+        {
+            Console.WriteLine("DOUBLE is: " + j);
+        }
+
+        public void PrintData(string k)
+        {
+            Console.WriteLine("STRING is: " + k);
         }
     }
 

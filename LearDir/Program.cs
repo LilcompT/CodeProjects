@@ -9,6 +9,9 @@ namespace LearnApplicationVol1
             VehicleInterfaceWork veh = new VehicleInterfaceWork();
             veh.SetName = "bob";
             veh.EngineType();
+
+            Nullables nullType = new Nullables();
+            nullType.NullValuesTest();
         }
     }
 

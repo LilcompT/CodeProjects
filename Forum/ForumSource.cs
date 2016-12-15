@@ -9,6 +9,15 @@ namespace ForumApplication
         {
             LinkedList<Topics> listOfTopics = new LinkedList<Topics>();
             
+            // Displays List of Topics
+
+            // User selection of Topic to view
+
+            /*
+                User must be able to add messages to exsisting topics &
+                User must also be able to create new topics
+            */
+
             listOfTopics.AddFirst(new Topics()
             {
                 TopicTitle = "First Topic",
@@ -31,6 +40,8 @@ namespace ForumApplication
 
     public class Topics
     {
+        public int TopicID{get; set;}
+
         public string TopicTitle{get; set;}
 
         public string MessageContent{get; set;}

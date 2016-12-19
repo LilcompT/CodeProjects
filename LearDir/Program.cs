@@ -6,7 +6,7 @@ namespace LearnApplicationVol1
     {
         public static void Main(string[] args)
         {
-            VehicleInterfaceWork veh = new VehicleInterfaceWork();
+            /*VehicleInterfaceWork veh = new VehicleInterfaceWork();
             veh.SetName = "bob";
             veh.EngineType();
 
@@ -16,7 +16,11 @@ namespace LearnApplicationVol1
             PrintOverload p = new PrintOverload();
             p.PrintData(5);
             p.PrintData(5.5);
-            p.PrintData("Five");
+            p.PrintData("Five");*/
+
+            Multiples mul = new Multiples();
+
+            mul.Multi3();
         }
     }
     // FUNCTION OVERLOADING
@@ -82,4 +86,57 @@ namespace LearnApplicationVol1
     }
 
     // ABSTRACT
+
+    class Multiples
+    {
+        public void Multi1()
+        {
+            int multiCount = 1;
+            int result = 0;
+
+            for(int i = 0; i <= 12 && multiCount <= 12; i++)
+            {
+                if(i == 12)
+                {
+                    Console.WriteLine(multiCount * i + "\n");
+                    i = 0;
+                    ++multiCount;
+                }
+                else
+                {
+                    Console.WriteLine(multiCount * i);
+                }
+            }
+        }
+
+        public void Multi2()
+        {
+            int a;
+            int b;
+
+            Console.WriteLine();
+            for (int i = 0; i < 12 * 12; ++i)
+            {
+                a = i / 12 + 1;
+                b = i % 12 + 1;
+                Console.WriteLine("{0} * {1} = {2}", a, b, a * b);
+            }
+        }
+
+        public void Multi3()
+        {
+            int col;
+            int row;
+
+            for(row = 1; row <= 12; row++)
+            {
+                for(col = 1; col <=12; col++)
+                {
+                    Console.WriteLine("{0}\t", row*col);
+                }
+                
+                Console.WriteLine("\n");
+            }
+        }
+    }
 }

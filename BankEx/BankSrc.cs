@@ -6,7 +6,7 @@ namespace ConsoleApplication
     {
         public static void Main(string[] args)
         {
-            
+            CurrentAcc curr = new CurrentAcc();    
         }
     }
 
@@ -23,15 +23,17 @@ namespace ConsoleApplication
     class CurrentAcc : Account
     {
         //Temp cust Account
-        double custCurrBalance;
+        private double custCurrBalance;
         public override void Withdraw(double cashAmt)
         {
-            Console.WriteLine("Current Account Widthrawal Method");
+            custCurrBalance -= cashAmt;
+            Console.WriteLine("New balance: " + custCurrBalance);
         }
 
         public override void Deposit(double cashAmt)
         {
-            Console.WriteLine("Current Account Deposit Method");
+            custCurrBalance =+ cashAmt;
+            Console.WriteLine("New balance: " + custCurrBalance);
         }
 
         public override double ViewAcc()
@@ -42,15 +44,17 @@ namespace ConsoleApplication
 
     class SavingsAcc : Account
     {
-        double custSavBalance;
+       private double custSavBalance;
         public override void Withdraw(double cashAmt)
         {
-            Console.WriteLine("Savings Account Withdraw Method");
+            custSavBalance -= cashAmt;
+            Console.WriteLine("New balance: " + custSavBalance);
         }
 
         public override void Deposit(double cashAmt)
         {
-            Console.WriteLine("Savings Account Deposit Method");
+            custSavBalance =+ cashAmt;
+            Console.WriteLine("New balance: " + custSavBalance);
         }
 
         public override double ViewAcc()

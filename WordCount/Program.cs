@@ -15,7 +15,7 @@ namespace WordCounter
         {           
             WordCounter pro = new WordCounter();
 
-            line = File.ReadAllText("text.txt");
+            line = File.ReadAllText("active.html");
 
             pro.Process(pro.GetFile(line));
         }

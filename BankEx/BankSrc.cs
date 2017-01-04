@@ -6,12 +6,88 @@ namespace ConsoleApplication
 {
     public class BankCore
     {
+        static List<UserAccountManagement> accountList = new List<UserAccountManagement>();
+        private void BankFront()
+        {
+            
+            int optionInput = 0;
+
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("WELCOME TO THE BANK OF RETARD");
+            Console.WriteLine("---------------------------------");
+
+            Console.WriteLine();
+            Console.WriteLine("Please select an option");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("1. Exsisting User");
+            Console.WriteLine("2. New Member\n");
+            Console.Write("Option: ");
+            optionInput = Int32.Parse(Console.ReadLine());
+            
+            if(optionInput == 1)
+            {
+                DisplayMainInterface();
+            }
+            else if(optionInput == 2)
+            {
+                AddNewUser();
+            }
+        }
+
+        private void AddNewUser()
+        {
+            string userName = "";
+            string passcode = "";
+            int accountType = 0;
+
+            Console.Write("\nEnter full name: ");
+            userName = Console.ReadLine();
+            Console.Write("\nEnter new passcode: ");
+            passcode = Console.ReadLine();
+            Console.Write("\nChoose Account Type");
+            Console.Write("\n1. Create Current Account\t\t 2. Create Savings Account");
+            accountType = Int32.Parse(Console.ReadLine());
+
+            accountList.Add(new UserAccountManagement(userName, passcode, accountType));
+        }
+
+        private void DisplayMainInterface()
+        {
+            int OptionInput = 0;
+
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("WELCOME TO THE BANK OF RETARD");
+            Console.WriteLine("---------------------------------");
+
+            Console.WriteLine("1. View Account\t\t\t\t2. Deposit Cash");
+            Console.WriteLine("3. Widthraw Cash\t\t\t4. Exit");
+
+            switch(OptionInput)
+            {
+                case 1: 
+                    // Display user account
+                    break;
+                case 2:
+                    // Desposit user cash into account
+                    break;
+                case 3:
+                    // Widthraw cash from user account
+                    break;
+                case 4:
+                    // Terminate application
+                    break;
+            }
+        }
+
         public static void Main(string[] args)
         {
-            UserAccountManagement user = new UserAccountManagement();
+            BankCore Bc = new BankCore();
+            Bc.BankFront();
 
-            user.AddNewUser();
-            user.TestUser();
+            foreach(UserAccountManagement obj in accountList)
+            {
+                obj.Display();
+            }
         }
     }
 
@@ -77,23 +153,19 @@ namespace ConsoleApplication
 
        List<UserAccountManagement> accounts = new List<UserAccountManagement>();
        
-       public void AddNewUser()
+       public  UserAccountManagement(string name, string passcode, int accType)
        {
-           string input = "";
-
-           Console.WriteLine("Enter Full Name: ");
-           input = Console.ReadLine();
-           name = input;
-           Console.WriteLine();
-           Console.Write("Enter passcode: ");
-           input = Console.ReadLine();
-           passcode = input;
-           Console.WriteLine();
-           Console.Write("Type of Account: ");
-           input = Console.ReadLine();
-           accType = Int32.Parse(input);
+           this.name = name;
+           this.passcode = passcode;
+           this.accType = accType;
        }
 
+       public void Display()
+       {
+           Console.WriteLine("User: {0}, {1}", name, accType);
+       }
+
+      /*
        public bool Authentication()
        {
            string loginInput = "";
@@ -111,7 +183,7 @@ namespace ConsoleApplication
            while(attempt != 3)
            {
                // Check username and passcode against user account list
-               /*
+               
                if(loginInput == nameInList && loginInput == passcodeInList)
                {
                    return true;
@@ -121,10 +193,8 @@ namespace ConsoleApplication
                    --attempt;
                    return false;
                } 
-               */
            }
-
-           
        }
+       */
     }
 }

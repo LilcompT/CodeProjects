@@ -6,7 +6,17 @@ namespace ConsoleApplication
 {
     public class BankCore
     {
-        static List<UserAccountManagement> accountList = new List<UserAccountManagement>();
+
+        private static List<UserAccountManagement> accountList = new List<UserAccountManagement>();
+
+        public static void Main(string[] args)
+        {
+            BankCore Bc = new BankCore();
+            Bc.BankFront();
+
+
+        }
+        
         private void BankFront()
         {
             
@@ -26,7 +36,14 @@ namespace ConsoleApplication
             
             if(optionInput == 1)
             {
-                DisplayMainInterface();
+                if(Authentication() == true)
+                {
+                    Console.WriteLine("Logged in");
+                }
+                else
+                {
+                    Console.WriteLine("Login Failed");
+                }
             }
             else if(optionInput == 2)
             {
@@ -51,6 +68,35 @@ namespace ConsoleApplication
             accountList.Add(new UserAccountManagement(userName, passcode, accountType));
         }
 
+        public bool Authentication()
+        {
+           string loginInput = "";
+           int attempt = 0;
+           
+           Console.Write("Enter name: ");
+           loginInput = Console.ReadLine();
+
+           Console.WriteLine();
+           Console.Write("Enter passcode: ");
+           loginInput = Console.ReadLine();
+
+           while(attempt != 3)
+           {
+               Console.WriteLine("Inside while loop");
+    
+               foreach(UserAccountManagement user in accountList)
+               {
+                   Console.WriteLine("Reached user loop");
+                   if(loginInput == user.UserName && loginInput == user.UserPasscode)
+                   {
+                        return true;
+                   }
+               }
+
+               attempt++;
+           }
+           return false;
+        }
         private void DisplayMainInterface()
         {
             int OptionInput = 0;
@@ -76,17 +122,6 @@ namespace ConsoleApplication
                 case 4:
                     // Terminate application
                     break;
-            }
-        }
-
-        public static void Main(string[] args)
-        {
-            BankCore Bc = new BankCore();
-            Bc.BankFront();
-
-            foreach(UserAccountManagement obj in accountList)
-            {
-                obj.Display();
             }
         }
     }
@@ -160,41 +195,37 @@ namespace ConsoleApplication
            this.accType = accType;
        }
 
+       public string UserName
+       {
+           get
+           {
+               return name;
+           }
+       }
+
+       public string UserPasscode
+       {
+           get
+           {
+               return passcode;
+           }
+       }
+
+       public double MainUserBalance
+       {
+           get
+           {
+               return userBalance;
+           }
+           set
+           {
+               userBalance = value;
+           }
+       }
+
        public void Display()
        {
            Console.WriteLine("User: {0}, {1}", name, accType);
        }
-
-      /*
-       public bool Authentication()
-       {
-           string loginInput = "";
-           int attempt = 3;
-
-
-
-           Console.Write("Enter name: ");
-           loginInput = Console.ReadLine();
-
-           Console.WriteLine();
-           Console.Write("Enter passcode: ");
-           loginInput = Console.ReadLine();
-
-           while(attempt != 3)
-           {
-               // Check username and passcode against user account list
-               
-               if(loginInput == nameInList && loginInput == passcodeInList)
-               {
-                   return true;
-               }
-               else
-               {
-                   --attempt;
-                   return false;
-               } 
-           }
-       }
-       */
     }
 }

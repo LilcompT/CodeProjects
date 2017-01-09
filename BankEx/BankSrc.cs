@@ -12,9 +12,6 @@ namespace ConsoleApplication
         public static void Main(string[] args)
         {
             BankCore Bc = new BankCore();
-            Bc.BankFront();
-
-
         }
         
         private void BankFront()
@@ -33,6 +30,7 @@ namespace ConsoleApplication
             Console.WriteLine("2. New Member\n");
             Console.Write("Option: ");
             optionInput = Int32.Parse(Console.ReadLine());
+            
             
             if(optionInput == 1)
             {
@@ -70,29 +68,28 @@ namespace ConsoleApplication
 
         public bool Authentication()
         {
-           string loginInput = "";
+           string loginName = "";
+           string loginPass = "";
            int attempt = 0;
            
            Console.Write("Enter name: ");
-           loginInput = Console.ReadLine();
+           loginName = Console.ReadLine();
+           Console.WriteLine("User input: " + loginName);
 
            Console.WriteLine();
            Console.Write("Enter passcode: ");
-           loginInput = Console.ReadLine();
+           loginPass = Console.ReadLine();
+           Console.WriteLine("User input: " + loginPass);
 
-           while(attempt != 3)
+           while(attempt != 1)
            {
-               Console.WriteLine("Inside while loop");
-    
                foreach(UserAccountManagement user in accountList)
                {
-                   Console.WriteLine("Reached user loop");
-                   if(loginInput == user.UserName && loginInput == user.UserPasscode)
+                   if(loginName == user.UserName && loginPass == user.UserPasscode)
                    {
-                        return true;
+                       return true;
                    }
                }
-
                attempt++;
            }
            return false;

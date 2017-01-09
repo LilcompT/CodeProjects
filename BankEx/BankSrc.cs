@@ -8,6 +8,7 @@ namespace ConsoleApplication
     {
 
         private static List<UserAccountManagement> accountList = new List<UserAccountManagement>();
+        private static int userID = 0;
 
         public static void Main(string[] args)
         {
@@ -24,12 +25,13 @@ namespace ConsoleApplication
         {
             
             int optionInput = 0;
-
+        
             Console.WriteLine();
             Console.WriteLine("Please select an option");
             Console.WriteLine("---------------------------------");
             Console.WriteLine("1. Exsisting User");
-            Console.WriteLine("2. New Member\n");
+            Console.WriteLine("2. New Member");
+            Console.WriteLine("3. Exit\n");
             Console.Write("Option: ");
             optionInput = Int32.Parse(Console.ReadLine());
             
@@ -37,7 +39,7 @@ namespace ConsoleApplication
             {
                 if(Authentication() == true)
                 {
-                    DisplayMainInterface();
+                    DisplayMainInterface(userID);
                 }
                 else
                 {
@@ -47,8 +49,13 @@ namespace ConsoleApplication
             else if(optionInput == 2)
             {
                 AddNewUser();
-                DisplayMainInterface();
+                DisplayMainInterface(userID);
             }
+            else if(optionInput ==  3)
+            {
+                //System exit
+            }
+
         }
 
         private void AddNewUser()
@@ -74,6 +81,7 @@ namespace ConsoleApplication
            string loginName = "";
            string loginPass = "";
            int attempt = 0;
+           int index = 0;
            
            Console.Write("Enter name: ");
            loginName = Console.ReadLine();
@@ -88,34 +96,68 @@ namespace ConsoleApplication
                {
                    if(loginName == user.UserName && loginPass == user.UserPasscode)
                    {
+                       userID = index;
                        return true;
                    }
+
+                   ++index;
                }
                attempt++;
            }
            return false;
         }
-        private void DisplayMainInterface()
+        private void DisplayMainInterface(int userID)
         {
             int OptionInput = 0;
+            double cashInput = 0.0;
+            bool taskNotFinished = true;
 
             Console.WriteLine("1. View Account\t\t\t\t2. Deposit Cash");
-            Console.WriteLine("3. Widthraw Cash\t\t\t4. Exit");
+            Console.WriteLine("3. Widthraw Cash\t\t\t4. Log Out");
 
-            switch(OptionInput)
+            OptionInput = Int32.Parse(Console.ReadLine());
+
+            while(taskNotFinished)
             {
-                case 1: 
-                    // Display user account
-                    break;
-                case 2:
-                    // Desposit user cash into account
-                    break;
-                case 3:
-                    // Widthraw cash from user account
-                    break;
-                case 4:
-                    // Terminate application
-                    break;
+                switch(OptionInput)
+                {
+                    case 1:
+                        accountList[userID].Display();
+                        taskNotFinished = false;
+                        DisplayMainInterface(userID); 
+                        break;
+                    case 2:
+                        Console.Write("\nAmount to Deposit: ");
+                        cashInput = double.Parse(Console.ReadLine());
+                        
+                        if(accountList[userID].accountType == 1)
+                        {
+                            //deposit into current
+                        }
+                        else
+                        {
+                            //deposit into savings
+                        }
+
+                        break;
+                    case 3:
+                        Console.Write("\nAmount to Widthraw: ");
+                        cashInput = double.Parse(Console.ReadLine());
+                        
+                        if(accountList[userID].accountType  == 1)
+                        {
+                            //Widthraw from current
+                        }
+                        else
+                        {
+                            //Widthraw from savings
+                        }
+
+                        break;
+                    case 4:
+                        BankFront();
+                        break;
+                }
             }
         }
     }
@@ -154,7 +196,7 @@ namespace ConsoleApplication
 
     class SavingsAcc : Account
     {
-       private double custSavBalance;
+        private double custSavBalance;
         public override double Withdraw(double cashAmt)
         {
             custSavBalance -= cashAmt;
@@ -178,7 +220,11 @@ namespace ConsoleApplication
        private  string name;
        private string passcode;
        private int accType;
-       private double userBalance = 1000.00;
+       private double currentBalance = 1000.00;
+       private double savingBalance = 900.00;
+
+       private CurrentAcc current = new CurrentAcc();
+       private SavingsAcc savings = new SavingsAcc();
 
        public  UserAccountManagement(string name, string passcode, int accType)
        {
@@ -203,21 +249,24 @@ namespace ConsoleApplication
            }
        }
 
-       public double MainUserBalance
+       public int accountType
        {
            get
            {
-               return userBalance;
-           }
-           set
-           {
-               userBalance = value;
+               return accType;
            }
        }
 
        public void Display()
        {
-           Console.WriteLine("User: {0}, {1}", name, accType);
+           if(accType == 1)
+           {
+               Console.WriteLine("User: {0}, {1}, {2}", name, accType, currentBalance);
+           }
+           else
+           {
+               Console.WriteLine("User: {0}, {1}, {2}", name, accType, savingBalance);
+           }
        }
     }
 }

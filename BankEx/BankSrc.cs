@@ -112,6 +112,9 @@ namespace ConsoleApplication
             double cashInput = 0.0;
             bool taskNotFinished = true;
 
+            CurrentAcc current = new CurrentAcc();
+            SavingsAcc savings = new SavingsAcc();
+
             Console.WriteLine("1. View Account\t\t\t\t2. Deposit Cash");
             Console.WriteLine("3. Widthraw Cash\t\t\t4. Log Out");
 
@@ -132,11 +135,11 @@ namespace ConsoleApplication
                         
                         if(accountList[userID].accountType == 1)
                         {
-                            //deposit into current
+                            current.Deposit(cashInput);
                         }
                         else
                         {
-                            //deposit into savings
+                            savings.Deposit(cashInput);
                         }
 
                         break;
@@ -146,11 +149,11 @@ namespace ConsoleApplication
                         
                         if(accountList[userID].accountType  == 1)
                         {
-                            //Widthraw from current
+                            current.Withdraw(cashInput);
                         }
                         else
                         {
-                            //Widthraw from savings
+                            savings.Withdraw(cashInput);
                         }
 
                         break;
@@ -165,11 +168,51 @@ namespace ConsoleApplication
     public abstract class Account
     {
         // Widthrawal Method
-        public abstract double Withdraw(double cashAmt);
+        public abstract void Withdraw(double cashAmt);
         // Deposit Method
-        public abstract double Deposit(double cashAmt);
+        public abstract void Deposit(double cashAmt);
 
-        public abstract void ViewAcc();
+        public abstract void ViewAccount();
+    }
+
+    class CurrentAcc : Account
+    {
+        UserAccountManagement transaction = new UserAccountManagement();
+
+        public override void Withdraw(double cashAmt)
+        {
+            transaction.CurrentBalanceTransaction -= cashAmt;
+        }
+
+        public override void Deposit(double cashAmt)
+        {
+            transaction.CurrentBalanceTransaction += cashAmt;
+        }
+
+        public override void ViewAccount()
+        {
+            Console.WriteLine("Name: {0} Account Type: {1} Balance: {2}", transaction.UserName, transaction.accountType, transaction.CurrentBalanceTransaction);
+        }
+    }
+
+    class SavingsAcc : Account
+    {
+        UserAccountManagement savingsTransaction = new UserAccountManagement();
+
+        public override void Withdraw(double cashAmt)
+        {
+            savingsTransaction.CurrentBalanceTransaction -= cashAmt;
+        }
+
+        public override void Deposit(double cashAmt)
+        {
+            savingsTransaction.CurrentBalanceTransaction += cashAmt;
+        }
+
+        public override void ViewAccount()
+        {
+            Console.WriteLine("Name: {0} Account Type: {1} Balance: {2}", savingsTransaction.UserName, savingsTransaction.accountType, savingsTransaction.CurrentBalanceTransaction);
+        }
     }
 
     class UserAccountManagement
@@ -180,6 +223,10 @@ namespace ConsoleApplication
        private double currentBalance = 1000.00;
        private double savingBalance = 900.00;
 
+       public UserAccountManagement()
+       {
+
+       }
        public  UserAccountManagement(string name, string passcode, int accType)
        {
            this.name = name;
@@ -208,6 +255,32 @@ namespace ConsoleApplication
            get
            {
                return accType;
+           }
+       }
+
+       public double CurrentBalanceTransaction
+       {
+           get
+           {
+               return currentBalance;
+           }
+
+           set
+           {
+               currentBalance = value;
+           }
+       }
+
+       public double SavingBalanceTransaction
+       {
+           get
+           {
+               return savingBalance;
+           }
+          
+           set
+           {
+               savingBalance = value;
            }
        }
     }

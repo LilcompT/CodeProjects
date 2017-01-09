@@ -122,7 +122,7 @@ namespace ConsoleApplication
                 switch(OptionInput)
                 {
                     case 1:
-                        accountList[userID].Display();
+                        //accountList[userID].Display();
                         taskNotFinished = false;
                         DisplayMainInterface(userID); 
                         break;
@@ -169,50 +169,7 @@ namespace ConsoleApplication
         // Deposit Method
         public abstract double Deposit(double cashAmt);
 
-        public abstract double ViewAcc();
-    }
-
-    class CurrentAcc : Account
-    {
-        //Temp cust Account
-        private double custCurrBalance;
-        public override double Withdraw(double cashAmt)
-        {
-            custCurrBalance -= cashAmt;
-            return custCurrBalance;
-        }
-
-        public override double Deposit(double cashAmt)
-        {
-            custCurrBalance =+ cashAmt;
-            return custCurrBalance;
-        }
-
-        public override double ViewAcc()
-        {
-            return custCurrBalance;
-        }
-    }
-
-    class SavingsAcc : Account
-    {
-        private double custSavBalance;
-        public override double Withdraw(double cashAmt)
-        {
-            custSavBalance -= cashAmt;
-            return custSavBalance;
-        }
-
-        public override double Deposit(double cashAmt)
-        {
-            custSavBalance =+ cashAmt;
-            return custSavBalance;
-        }
-
-        public override double ViewAcc()
-        {
-            return custSavBalance;
-        }
+        public abstract void ViewAcc();
     }
 
     class UserAccountManagement
@@ -222,9 +179,6 @@ namespace ConsoleApplication
        private int accType;
        private double currentBalance = 1000.00;
        private double savingBalance = 900.00;
-
-       private CurrentAcc current = new CurrentAcc();
-       private SavingsAcc savings = new SavingsAcc();
 
        public  UserAccountManagement(string name, string passcode, int accType)
        {
@@ -254,18 +208,6 @@ namespace ConsoleApplication
            get
            {
                return accType;
-           }
-       }
-
-       public void Display()
-       {
-           if(accType == 1)
-           {
-               Console.WriteLine("User: {0}, {1}, {2}", name, accType, currentBalance);
-           }
-           else
-           {
-               Console.WriteLine("User: {0}, {1}, {2}", name, accType, savingBalance);
            }
        }
     }

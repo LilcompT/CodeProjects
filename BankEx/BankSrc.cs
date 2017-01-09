@@ -12,16 +12,18 @@ namespace ConsoleApplication
         public static void Main(string[] args)
         {
             BankCore Bc = new BankCore();
+
+            Console.WriteLine("\n---------------------------------");
+            Console.WriteLine("WELCOME TO THE BANK OF LEARNING");
+            Console.WriteLine("---------------------------------");
+
+            Bc.BankFront();
         }
         
         private void BankFront()
         {
             
             int optionInput = 0;
-
-            Console.WriteLine("---------------------------------");
-            Console.WriteLine("WELCOME TO THE BANK OF RETARD");
-            Console.WriteLine("---------------------------------");
 
             Console.WriteLine();
             Console.WriteLine("Please select an option");
@@ -31,12 +33,11 @@ namespace ConsoleApplication
             Console.Write("Option: ");
             optionInput = Int32.Parse(Console.ReadLine());
             
-            
             if(optionInput == 1)
             {
                 if(Authentication() == true)
                 {
-                    Console.WriteLine("Logged in");
+                    DisplayMainInterface();
                 }
                 else
                 {
@@ -46,6 +47,7 @@ namespace ConsoleApplication
             else if(optionInput == 2)
             {
                 AddNewUser();
+                DisplayMainInterface();
             }
         }
 
@@ -61,6 +63,7 @@ namespace ConsoleApplication
             passcode = Console.ReadLine();
             Console.Write("\nChoose Account Type");
             Console.Write("\n1. Create Current Account\t\t 2. Create Savings Account");
+            Console.Write("\nOption: ");
             accountType = Int32.Parse(Console.ReadLine());
 
             accountList.Add(new UserAccountManagement(userName, passcode, accountType));
@@ -74,13 +77,11 @@ namespace ConsoleApplication
            
            Console.Write("Enter name: ");
            loginName = Console.ReadLine();
-           Console.WriteLine("User input: " + loginName);
-
+        
            Console.WriteLine();
            Console.Write("Enter passcode: ");
            loginPass = Console.ReadLine();
-           Console.WriteLine("User input: " + loginPass);
-
+        
            while(attempt != 1)
            {
                foreach(UserAccountManagement user in accountList)
@@ -97,10 +98,6 @@ namespace ConsoleApplication
         private void DisplayMainInterface()
         {
             int OptionInput = 0;
-
-            Console.WriteLine("---------------------------------");
-            Console.WriteLine("WELCOME TO THE BANK OF RETARD");
-            Console.WriteLine("---------------------------------");
 
             Console.WriteLine("1. View Account\t\t\t\t2. Deposit Cash");
             Console.WriteLine("3. Widthraw Cash\t\t\t4. Exit");
@@ -183,8 +180,6 @@ namespace ConsoleApplication
        private int accType;
        private double userBalance = 1000.00;
 
-       List<UserAccountManagement> accounts = new List<UserAccountManagement>();
-       
        public  UserAccountManagement(string name, string passcode, int accType)
        {
            this.name = name;

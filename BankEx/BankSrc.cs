@@ -127,7 +127,8 @@ namespace ConsoleApplication
                     case 1:
                         //accountList[userID].Display();
                         taskNotFinished = false;
-                        DisplayMainInterface(userID); 
+                        current.ViewAccount();
+                        
                         break;
                     case 2:
                         Console.Write("\nAmount to Deposit: ");
@@ -135,13 +136,14 @@ namespace ConsoleApplication
                         
                         if(accountList[userID].accountType == 1)
                         {
-                            current.Deposit(cashInput);
+                            
                         }
                         else
                         {
-                            savings.Deposit(cashInput);
+                            
                         }
 
+                        
                         break;
                     case 3:
                         Console.Write("\nAmount to Widthraw: ");
@@ -149,13 +151,14 @@ namespace ConsoleApplication
                         
                         if(accountList[userID].accountType  == 1)
                         {
-                            current.Withdraw(cashInput);
+                            
                         }
                         else
                         {
-                            savings.Withdraw(cashInput);
+                            
                         }
 
+                        
                         break;
                     case 4:
                         BankFront();
@@ -181,7 +184,7 @@ namespace ConsoleApplication
 
         public override void Withdraw(double cashAmt)
         {
-            transaction.CurrentBalanceTransaction -= cashAmt;
+             -= cashAmt;
         }
 
         public override void Deposit(double cashAmt)

@@ -109,59 +109,61 @@ namespace ConsoleApplication
         private void DisplayMainInterface(int userID)
         {
             int OptionInput = 0;
+            int ID = userID;
             double cashInput = 0.0;
+            const int currentAccType = 1;
+            const int savingAccType = 2;
             bool taskNotFinished = true;
-
-            CurrentAcc current = new CurrentAcc();
-            SavingsAcc savings = new SavingsAcc();
 
             Console.WriteLine("1. View Account\t\t\t\t2. Deposit Cash");
             Console.WriteLine("3. Widthraw Cash\t\t\t4. Log Out");
 
             OptionInput = Int32.Parse(Console.ReadLine());
-
             while(taskNotFinished)
             {
                 switch(OptionInput)
                 {
                     case 1:
-                        //accountList[userID].Display();
+                        accountList[userID].ViewAccount(++ID);
                         taskNotFinished = false;
-                        current.ViewAccount();
-                        
+                        DisplayMainInterface(userID);
                         break;
                     case 2:
                         Console.Write("\nAmount to Deposit: ");
                         cashInput = double.Parse(Console.ReadLine());
                         
-                        if(accountList[userID].accountType == 1)
+                        if(accountList[userID].accountType == currentAccType)
                         {
-                            
+                            accountList[userID].Deposit(cashInput, currentAccType);
                         }
-                        else
+                        else if(accountList[userID].accountType == savingAccType)
                         {
-                            
+                            accountList[userID].Deposit(cashInput, savingAccType);
                         }
-
                         
+                        taskNotFinished = false;
+                        DisplayMainInterface(userID);
                         break;
                     case 3:
                         Console.Write("\nAmount to Widthraw: ");
                         cashInput = double.Parse(Console.ReadLine());
                         
-                        if(accountList[userID].accountType  == 1)
+                        if(accountList[userID].accountType  == currentAccType)
                         {
-                            
+                            accountList[userID].Withdraw(cashInput, currentAccType);
                         }
                         else
                         {
-                            
+                            accountList[userID].Withdraw(cashInput, currentAccType);
                         }
 
-                        
+                        taskNotFinished = false;
+                        DisplayMainInterface(userID);
                         break;
                     case 4:
                         BankFront();
+                        taskNotFinished = false;
+                        
                         break;
                 }
             }
@@ -171,54 +173,14 @@ namespace ConsoleApplication
     public abstract class Account
     {
         // Widthrawal Method
-        public abstract void Withdraw(double cashAmt);
+        public abstract void Withdraw(double cashAmt, int accountType);
         // Deposit Method
-        public abstract void Deposit(double cashAmt);
+        public abstract void Deposit(double cashAmt, int accountType);
 
-        public abstract void ViewAccount();
+        public abstract void ViewAccount(int accountType);
     }
 
-    class CurrentAcc : Account
-    {
-        UserAccountManagement transaction = new UserAccountManagement();
-
-        public override void Withdraw(double cashAmt)
-        {
-             -= cashAmt;
-        }
-
-        public override void Deposit(double cashAmt)
-        {
-            transaction.CurrentBalanceTransaction += cashAmt;
-        }
-
-        public override void ViewAccount()
-        {
-            Console.WriteLine("Name: {0} Account Type: {1} Balance: {2}", transaction.UserName, transaction.accountType, transaction.CurrentBalanceTransaction);
-        }
-    }
-
-    class SavingsAcc : Account
-    {
-        UserAccountManagement savingsTransaction = new UserAccountManagement();
-
-        public override void Withdraw(double cashAmt)
-        {
-            savingsTransaction.CurrentBalanceTransaction -= cashAmt;
-        }
-
-        public override void Deposit(double cashAmt)
-        {
-            savingsTransaction.CurrentBalanceTransaction += cashAmt;
-        }
-
-        public override void ViewAccount()
-        {
-            Console.WriteLine("Name: {0} Account Type: {1} Balance: {2}", savingsTransaction.UserName, savingsTransaction.accountType, savingsTransaction.CurrentBalanceTransaction);
-        }
-    }
-
-    class UserAccountManagement
+    class UserAccountManagement : Account
     {
        private  string name;
        private string passcode;
@@ -237,6 +199,41 @@ namespace ConsoleApplication
            this.accType = accType;
        }
 
+       public override void Deposit(double cashAmt, int accountType)
+       {
+           if(accountType == 1)
+           {
+               currentBalance += cashAmt; 
+           }
+           else if(accountType == 2)
+           {
+               savingBalance += cashAmt;
+           }
+       }
+
+       public override void Withdraw(double cashAmt, int accountType)
+       {
+           if(accountType == 1)
+           {
+               currentBalance -= cashAmt;
+           }
+           else if(accountType == 2)
+           {
+               savingBalance -= cashAmt;
+           }
+       }
+
+       public override void ViewAccount(int inputAccount)
+       {   
+           if(inputAccount == accType)
+           {
+               Console.WriteLine("Name: {0} Account Type: {1} Balanace Remaining: {2}", name, accType, currentBalance);
+           }
+           else if(inputAccount == accType)
+           {
+               Console.WriteLine("Name: {0} Account Type: {1} Balanace Remaining: {2}", name, accType, savingBalance);
+           }
+       }
        public string UserName
        {
            get
@@ -258,32 +255,6 @@ namespace ConsoleApplication
            get
            {
                return accType;
-           }
-       }
-
-       public double CurrentBalanceTransaction
-       {
-           get
-           {
-               return currentBalance;
-           }
-
-           set
-           {
-               currentBalance = value;
-           }
-       }
-
-       public double SavingBalanceTransaction
-       {
-           get
-           {
-               return savingBalance;
-           }
-          
-           set
-           {
-               savingBalance = value;
            }
        }
     }

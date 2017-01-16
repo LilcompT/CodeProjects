@@ -90,12 +90,15 @@ namespace ConsoleApplication
            Console.Write("Enter passcode: ");
            loginPass = Console.ReadLine();
         
+       
            while(attempt != 1)
            {
                foreach(UserAccountManagement user in accountList)
                {
                    if(loginName == user.UserName && loginPass == user.UserPasscode)
                    {
+                       // Problem Area
+                       // Implement id into UserAccountManagement to act as index
                        userID = index;
                        return true;
                    }
@@ -125,6 +128,7 @@ namespace ConsoleApplication
                 {
                     case 1:
                         accountList[userID].ViewAccount(++ID);
+                        Console.WriteLine("User ID: " + ID);
                         taskNotFinished = false;
                         DisplayMainInterface(userID);
                         break;

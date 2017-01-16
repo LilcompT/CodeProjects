@@ -152,7 +152,7 @@ namespace ConsoleApplication
                         {
                             accountList[userID].Withdraw(cashInput, currentAccType);
                         }
-                        else
+                        else if(accountList[userID].accountType == savingAccType)
                         {
                             accountList[userID].Withdraw(cashInput, currentAccType);
                         }

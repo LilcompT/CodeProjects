@@ -63,6 +63,7 @@ namespace ConsoleApplication
             string userName = "";
             string passcode = "";
             int accountType = 0;
+            int defaultID = 0;
 
             Console.Write("\nEnter full name: ");
             userName = Console.ReadLine();
@@ -187,6 +188,7 @@ namespace ConsoleApplication
     class UserAccountManagement : Account
     {
        private  string name;
+       private int ID = 0;
        private string passcode;
        private int accType;
        private double currentBalance = 1000.00;
@@ -196,8 +198,9 @@ namespace ConsoleApplication
        {
 
        }
-       public  UserAccountManagement(string name, string passcode, int accType)
+       public  UserAccountManagement(int ID, string name, string passcode, int accType)
        {
+           this.ID = ID;
            this.name = name;
            this.passcode = passcode;
            this.accType = accType;
@@ -259,6 +262,14 @@ namespace ConsoleApplication
            get
            {
                return accType;
+           }
+       }
+
+       public int getID
+       {
+           get
+           {
+               return ID;
            }
        }
     }

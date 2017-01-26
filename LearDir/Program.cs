@@ -1,142 +1,106 @@
 ﻿using System;
 
-namespace LearnApplicationVol1
+public class Node
 {
-    public class MainClass
+    // Points to the next reference
+    public Node next;
+
+    // Contains the data within the node
+    public Object data;
+}
+
+public class LinkedList
+{
+    // Reference to the first element in the Linked List
+    private Node head;
+
+    public void printAllNodes()
     {
-        public static void Main(string[] args)
+        // Points to the first element
+        Node current = head;
+
+        // Until a Node doesn't point to null we want to print the contents of all nodes
+        while (current != null)
         {
-            /*VehicleInterfaceWork veh = new VehicleInterfaceWork();
-            veh.SetName = "bob";
-            veh.EngineType();
-
-            Nullables nullType = new Nullables();
-            nullType.NullValuesTest();
-
-            PrintOverload p = new PrintOverload();
-            p.PrintData(5);
-            p.PrintData(5.5);
-            p.PrintData("Five");*/
-
-            Multiples mul = new Multiples();
-
-            mul.Multi3();
-        }
-    }
-    // FUNCTION OVERLOADING
-    class PrintOverload
-    {
-        public void PrintData(int i)
-        {
-            Console.WriteLine("INT is: " + i);
-        }
-
-        public void PrintData(double j)
-        {
-            Console.WriteLine("DOUBLE is: " + j);
-        }
-
-        public void PrintData(string k)
-        {
-            Console.WriteLine("STRING is: " + k);
+            // Prints the content to console
+            Console.WriteLine(current.data);
+            // Points to the next Node
+            current = current.next;
         }
     }
 
-    // NULLABLES
-    class Nullables
+    public void AddFirst(Object data)
     {
-        double? num1 = 1.10;
-        double? num2 = 3.141;
-        double? num3;
+        // Creates a new Node Object
+        Node toAdd = new Node();
 
-        public void NullValuesTest()
-        {
-            num3 = num1 ?? 5.43;
-            Console.WriteLine("From num1 " + num3);
-            num3 = num2 ?? 5.43;
-            Console.WriteLine("From num2 " + num3);
-        }
+        // Assigns data to the Node Object
+        toAdd.data = data;
+
+        // Points to the first element in the Structure
+        toAdd.next = head;
+        // Inserts a new element at the head of the Structure
+        head = toAdd;
     }
 
-    // INTERFACE
-    interface ITest
+
+    public void AddLast(Object data)
     {
-        string SetName
+        // test condition to check if any elements exsist within the structure
+        if (head == null)
         {
-            set; get;
+            // Adds new node to the structure given that the condition holds
+            head = new Node();
+
+            // Assigns Data to the Node Object
+            head.data = data;
+            // Updates the pointer to null indicating the last element
+            head.next = null;
         }
-        void EngineType();
-    }
-
-    class VehicleInterfaceWork : ITest
-    {
-        string name = "";
-
-        public string SetName
+        else
         {
-            set{ name = value; }
-            get{ return name; }
-        }
+            // Creates new Node Object
+            Node toAdd = new Node();
+            // Assigns data to the node Object
+            toAdd.data = data;
 
-        public void EngineType()
-        {
-            Console.WriteLine("Inheriting Engine via Interface");
-            Console.WriteLine(SetName);
-        }
-    }
-
-    // ABSTRACT
-
-    class Multiples
-    {
-        public void Multi1()
-        {
-            int multiCount = 1;
-            int result = 0;
-
-            for(int i = 0; i <= 12 && multiCount <= 12; i++)
+            // Points to the first element in the Structure
+            Node current = head;
+            // Loops through the structure until current node points to null
+            while (current.next != null)
             {
-                if(i == 12)
-                {
-                    Console.WriteLine(multiCount * i + "\n");
-                    i = 0;
-                    ++multiCount;
-                }
-                else
-                {
-                    Console.WriteLine(multiCount * i);
-                }
+                // Updates pointer to the next element in the structure
+                current = current.next;
             }
+
+            // While Loop condition fails as null is found and inserts it in the null position
+            current.next = toAdd;
         }
+    }
+}
 
-        public void Multi2()
-        {
-            int a;
-            int b;
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Add First:");
+        LinkedList myList1 = new LinkedList();
 
-            Console.WriteLine();
-            for (int i = 0; i < 12 * 12; ++i)
-            {
-                a = i / 12 + 1;
-                b = i % 12 + 1;
-                Console.WriteLine("{0} * {1} = {2}", a, b, a * b);
-            }
-        }
+        myList1.AddFirst("Hello");
+        myList1.AddFirst("Magical");
+        myList1.AddFirst("World");
+        myList1.printAllNodes();
 
-        public void Multi3()
-        {
-            int col;
-            int row;
+        Console.WriteLine();
 
-            for(row = 1; row <= 12; row++)
-            {
-                for(col = 1; col <=12; col++)
-                {
-                    Console.WriteLine("{0}\t", row*col);
-                }
-                
-                Console.WriteLine("\n");
-            }
-        }
+        Console.WriteLine("Add Last:");
+        LinkedList myList2 = new LinkedList();
+
+        myList2.AddLast("Hello");
+        myList2.AddLast("Magical");
+        myList2.AddLast("World");
+        myList2.printAllNodes();
+
+        Console.ReadLine();
     }
 }

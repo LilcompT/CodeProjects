@@ -42,8 +42,7 @@ public class LinkedList
         // Inserts a new element at the head of the Structure
         head = toAdd;
     }
-
-
+    
     public void AddLast(Object data)
     {
         // test condition to check if any elements exsist within the structure
@@ -51,7 +50,6 @@ public class LinkedList
         {
             // Adds new node to the structure given that the condition holds
             head = new Node();
-
             // Assigns Data to the Node Object
             head.data = data;
             // Updates the pointer to null indicating the last element
@@ -86,9 +84,10 @@ class Program
         Console.WriteLine("Add First:");
         LinkedList myList1 = new LinkedList();
 
-        myList1.AddFirst("Hello");
-        myList1.AddFirst("Magical");
-        myList1.AddFirst("World");
+        //myList1.AddFirst("Hello");
+        //myList1.AddFirst("Magical");
+       // myList1.AddFirst("World");
+        myList1.AddLast("This is the last item");
         myList1.printAllNodes();
 
         Console.WriteLine();

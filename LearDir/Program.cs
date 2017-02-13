@@ -1,105 +1,67 @@
 ﻿using System;
 
-public class Node
+namespace LearnCode
 {
-    // Points to the next reference
-    public Node next;
-
-    // Contains the data within the node
-    public Object data;
-}
-
-public class LinkedList
-{
-    // Reference to the first element in the Linked List
-    private Node head;
-
-    public void printAllNodes()
+    class TestEnum
     {
-        // Points to the first element
-        Node current = head;
-
-        // Until a Node doesn't point to null we want to print the contents of all nodes
-        while (current != null)
+        static void Main(string[] args)
         {
-            // Prints the content to console
-            Console.WriteLine(current.data);
-            // Points to the next Node
-            current = current.next;
+            //TestEnum test = new TestEnum();
+            //test.EnumTest(Type.file);
+
+            FactorialTest factTest1 = new FactorialTest();
+            Console.WriteLine("Recursive Factorial: {0}", factTest1.RecursiveFactorial(5));
+            Console.WriteLine("Iterative Factorial: {0}", factTest1.IterativeFactorial(5));
         }
-    }
 
-    public void AddFirst(Object data)
-    {
-        // Creates a new Node Object
-        Node toAdd = new Node();
+        public enum Type {file, size, date, modified};
 
-        // Assigns data to the Node Object
-        toAdd.data = data;
-
-        // Points to the first element in the Structure
-        toAdd.next = head;
-        // Inserts a new element at the head of the Structure
-        head = toAdd;
-    }
-    
-    public void AddLast(Object data)
-    {
-        // test condition to check if any elements exsist within the structure
-        if (head == null)
+        public void EnumTest(Type criteria)
         {
-            // Adds new node to the structure given that the condition holds
-            head = new Node();
-            // Assigns Data to the Node Object
-            head.data = data;
-            // Updates the pointer to null indicating the last element
-            head.next = null;
-        }
-        else
-        {
-            // Creates new Node Object
-            Node toAdd = new Node();
-            // Assigns data to the node Object
-            toAdd.data = data;
-
-            // Points to the first element in the Structure
-            Node current = head;
-            // Loops through the structure until current node points to null
-            while (current.next != null)
+            switch(criteria)
             {
-                // Updates pointer to the next element in the structure
-                current = current.next;
+                case Type.file:
+                    Console.WriteLine("Sorting by File");
+                    break;
+                case Type.size:
+                    Console.WriteLine("Sorting by Size");
+                    break;   
+                case Type.date:
+                    Console.WriteLine("Sorting by Date");
+                    break;
+                case Type.modified:
+                    Console.WriteLine("Sorting by modified");
+                    break;      
+            }
+        }
+    }
+
+    class FactorialTest
+    {
+        public int RecursiveFactorial(int n)
+        {
+            if(n == 0 || n == 1)
+            {
+                return 1;
             }
 
-            // While Loop condition fails as null is found and inserts it in the null position
-            current.next = toAdd;
+            return n * (RecursiveFactorial(n-1));
         }
-    }
-}
 
-class Program
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Add First:");
-        LinkedList myList1 = new LinkedList();
+        public int IterativeFactorial(int n)
+        {
+            int result = 1;
 
-        //myList1.AddFirst("Hello");
-        //myList1.AddFirst("Magical");
-       // myList1.AddFirst("World");
-        myList1.AddLast("This is the last item");
-        myList1.printAllNodes();
+            if(n == 0 || n == 1)
+            {
+                return 1;
+            }
+            for(int i = 2; i <= n; ++i)
+            {
+                result = result * i;
+            }
 
-        Console.WriteLine();
-
-        Console.WriteLine("Add Last:");
-        LinkedList myList2 = new LinkedList();
-
-        myList2.AddLast("Hello");
-        myList2.AddLast("Magical");
-        myList2.AddLast("World");
-        myList2.printAllNodes();
-
-        Console.ReadLine();
+            return result;
+        }
     }
 }

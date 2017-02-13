@@ -15,8 +15,6 @@ namespace ConsoleApplication
         private static List<UserAccountManagement> accountList = new List<UserAccountManagement>();
         // global userID to act a session ID which will act as a index when accessing the accountList
         private static int userID = 0;
-        private enum LoginInput {userLogin = 1, userAdd, userExit};
-        private enum AccountOptions {accountView = 1, accountDeposit, accountWidthraw, accountLogout};  
 
         public static void Main(string[] args)
         {
@@ -245,9 +243,8 @@ namespace ConsoleApplication
        {
 
        }
-       public  UserAccountManagement(int ID, string name, string passcode, int accType)
+       public  UserAccountManagement( string name, string passcode, int accType)
        {
-           this.ID = ID;
            this.name = name;
            this.passcode = passcode;
            this.accType = accType;

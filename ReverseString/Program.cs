@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace ConsoleApplication
 {
@@ -39,6 +39,8 @@ namespace ConsoleApplication
 
             sample = new string(convert);
             Console.WriteLine(sample);
+            Console.WriteLine();
+            //sConsole.WriteLine();
         }
     }
 }
